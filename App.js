@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions, onPress } from 'react-native';
 import HintCard from './components/HintCard';
 
 export default function App() {
@@ -16,6 +16,34 @@ export default function App() {
   const [hint9, setHint9] = useState('');
   const [hint10, setHint10] = useState(''); 
   const [answer, setAnswer] = useState('');
+
+  const fetchNewRound = async () => {
+    try {
+      const response = await fetch(
+        "https://hintguessr-backend.vercel.app/api/round",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+  
+      const data = await response.json();
+  
+      setHint1(data.hints[0]);
+      setHint2(data.hints[1]);
+      setHint3(data.hints[2]);
+      setHint4(data.hints[3]);
+      setHint5(data.hints[4]);
+      setHint6(data.hints[5]);
+      setHint7(data.hints[6]);
+      setHint8(data.hints[7]);
+      setHint9(data.hints[8]);
+      setHint10(data.hints[9]);
+      setAnswer(data.answer);
+    } catch (err) {
+      console.error(err);
+    }
+  };
   
   return (
     <View style={styles.container}>
@@ -23,22 +51,22 @@ export default function App() {
         <Text style={styles.headerText}>Welcome to HintGuessr!</Text>
       </View>
       <View style={styles.hintcards}>
-        <HintCard text={'Hint 1'}/>
-        <HintCard text={'Hint 2'}/>
-        <HintCard text={'Hint 3'}/>
-        <HintCard text={'Hint 4'}/>
-        <HintCard text={'Hint 5'}/>
-        <HintCard text={'Hint 6'}/>
-        <HintCard text={'Hint 7'}/>
-        <HintCard text={'Hint 8'}/>
-        <HintCard text={'Hint 9'}/>
-        <HintCard text={'Hint 10'}/>
-        <HintCard text={'Answer'}/>
+        <HintCard text={hint1}/>
+        <HintCard text={hint2}/>
+        <HintCard text={hint3}/>
+        <HintCard text={hint4}/>
+        <HintCard text={hint5}/>
+        <HintCard text={hint6}/>
+        <HintCard text={hint7}/>
+        <HintCard text={hint8}/>
+        <HintCard text={hint9}/>
+        <HintCard text={hint10}/>
+        <HintCard text={answer}/>
       </View>
       <View style={styles.buttonsection}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => console.log('Next')}
+          onPress={fetchNewRound}
           >
           <Text style={styles.buttonText}>Next Round</Text>
         </TouchableOpacity>
