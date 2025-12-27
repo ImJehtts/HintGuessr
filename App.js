@@ -18,6 +18,7 @@ export default function App() {
   const [answer, setAnswer] = useState('');
 
   const fetchNewRound = async () => {
+    console.log('Fetching new round...');
     try {
       const response = await fetch(
         "https://hintguessr-backend.vercel.app/api/round",
