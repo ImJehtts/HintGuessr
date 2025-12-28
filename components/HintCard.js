@@ -20,6 +20,8 @@ const HintCard= (props) => {
             <Switch
             value={showText}
             onValueChange={setShowText}
+            trackColor={{ false: '#c18c5d', true: '#572618' }}
+            ios_backgroundColor={'#bd764c'}
             />
       </View>
     );

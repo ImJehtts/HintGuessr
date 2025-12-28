@@ -21,7 +21,7 @@ export default function App() {
     console.log('Fetching new round...');
     try {
       const response = await fetch(
-        "https://hintguessr-backend.vercel.app/api/round",
+        "https://hintguessr.vercel.app/api/round",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
