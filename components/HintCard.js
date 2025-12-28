@@ -5,12 +5,20 @@ import { StyleSheet, Text, View, Dimensions, Switch} from 'react-native';
 const HintCard= (props) => {
     const [showText, setShowText] = useState(true);
 
+    const isAnswer = props.isAnswer;
+
     return (
         <View style={styles.row}>
              <View
             style={[
             styles.card,
-            { backgroundColor: showText ? '#572618' : '#bd764c' }
+            { backgroundColor: isAnswer
+                ? '#374f3f' 
+                : showText
+                ? '#572618'
+                : '#bd764c', 
+
+            }
             ]}
             >
             <Text style={styles.hintText}>
@@ -20,7 +28,7 @@ const HintCard= (props) => {
             <Switch
             value={showText}
             onValueChange={setShowText}
-            trackColor={{ false: '#c18c5d', true: '#572618' }}
+            trackColor={{ false: '#c18c5d', true: isAnswer ? '#374f3f' : '#572618'}}
             ios_backgroundColor={'#bd764c'}
             />
       </View>

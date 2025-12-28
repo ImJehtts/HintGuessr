@@ -19,6 +19,17 @@ export default function App() {
 
   const fetchNewRound = async () => {
     console.log('Fetching new round...');
+      setHint1('');
+      setHint2('');
+      setHint3('');
+      setHint4('');
+      setHint5('');
+      setHint6('');
+      setHint7('');
+      setHint8('');
+      setHint9('');
+      setHint10('');
+      setAnswer('Loading New Round...');
     try {
       const response = await fetch(
         "https://hintguessr.vercel.app/api/round",
@@ -52,17 +63,17 @@ export default function App() {
         <Text style={styles.headerText}>Welcome to HintGuessr!</Text>
       </View>
       <View style={styles.hintcards}>
-        <HintCard text={hint1}/>
-        <HintCard text={hint2}/>
-        <HintCard text={hint3}/>
-        <HintCard text={hint4}/>
-        <HintCard text={hint5}/>
-        <HintCard text={hint6}/>
-        <HintCard text={hint7}/>
-        <HintCard text={hint8}/>
-        <HintCard text={hint9}/>
-        <HintCard text={hint10}/>
-        <HintCard text={answer}/>
+        <HintCard text={hint1} isAnswer={false}/>
+        <HintCard text={hint2} isAnswer={false}/>
+        <HintCard text={hint3} isAnswer={false}/>
+        <HintCard text={hint4} isAnswer={false}/>
+        <HintCard text={hint5} isAnswer={false}/>
+        <HintCard text={hint6} isAnswer={false}/>
+        <HintCard text={hint7} isAnswer={false}/>
+        <HintCard text={hint8} isAnswer={false}/>
+        <HintCard text={hint9} isAnswer={false}/>
+        <HintCard text={hint10} isAnswer={false}/>
+        <HintCard text={answer} isAnswer={true}/>
       </View>
       <View style={styles.buttonsection}>
         <TouchableOpacity
