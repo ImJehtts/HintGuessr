@@ -16,9 +16,15 @@ export default function App() {
   const [hint9, setHint9] = useState('');
   const [hint10, setHint10] = useState(''); 
   const [answer, setAnswer] = useState('');
+  const [resetSwitches, setResetSwitches] = useState(false);
+  const [newRoundFetching, setnewRoundFetching] = useState(false);
+  const [recentAnswers, setRecentAnswers] = useState([]);
+
 
   const fetchNewRound = async () => {
     console.log('Fetching new round...');
+    setnewRoundFetching(true);
+    setResetSwitches((prev) => !prev);
       setHint1('');
       setHint2('');
       setHint3('');
@@ -36,6 +42,7 @@ export default function App() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ recentAnswers }),
         }
       );
   
@@ -52,6 +59,13 @@ export default function App() {
       setHint9(data.hints[8]);
       setHint10(data.hints[9]);
       setAnswer(data.answer);
+      setRecentAnswers(prev =>
+        [...prev, data.answer].slice(-8)
+      );
+
+      setTimeout(() => {
+        setnewRoundFetching(false);
+      }, 2000); 
     } catch (err) {
       console.error(err);
     }
@@ -63,20 +77,21 @@ export default function App() {
         <Text style={styles.headerText}>Welcome to HintGuessr!</Text>
       </View>
       <View style={styles.hintcards}>
-        <HintCard text={hint1} isAnswer={false}/>
-        <HintCard text={hint2} isAnswer={false}/>
-        <HintCard text={hint3} isAnswer={false}/>
-        <HintCard text={hint4} isAnswer={false}/>
-        <HintCard text={hint5} isAnswer={false}/>
-        <HintCard text={hint6} isAnswer={false}/>
-        <HintCard text={hint7} isAnswer={false}/>
-        <HintCard text={hint8} isAnswer={false}/>
-        <HintCard text={hint9} isAnswer={false}/>
-        <HintCard text={hint10} isAnswer={false}/>
-        <HintCard text={answer} isAnswer={true}/>
+        <HintCard text={hint1} isAnswer={false} reset={resetSwitches}/>
+        <HintCard text={hint2} isAnswer={false} reset={resetSwitches}/>
+        <HintCard text={hint3} isAnswer={false} reset={resetSwitches}/>
+        <HintCard text={hint4} isAnswer={false} reset={resetSwitches}/>
+        <HintCard text={hint5} isAnswer={false} reset={resetSwitches}/>
+        <HintCard text={hint6} isAnswer={false} reset={resetSwitches}/>
+        <HintCard text={hint7} isAnswer={false} reset={resetSwitches}/>
+        <HintCard text={hint8} isAnswer={false} reset={resetSwitches}/>
+        <HintCard text={hint9} isAnswer={false} reset={resetSwitches}/>
+        <HintCard text={hint10} isAnswer={false} reset={resetSwitches}/>
+        <HintCard text={answer} isAnswer={true} reset={resetSwitches}/>
       </View>
       <View style={styles.buttonsection}>
         <TouchableOpacity
+          disabled={newRoundFetching}
           style={styles.button}
           onPress={fetchNewRound}
           >

@@ -1,11 +1,15 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Dimensions, Switch} from 'react-native';
 
 const HintCard= (props) => {
     const [showText, setShowText] = useState(true);
 
     const isAnswer = props.isAnswer;
+
+    useEffect(() => {
+        setShowText(true);
+      }, [props.reset]);
 
     return (
         <View style={styles.row}>

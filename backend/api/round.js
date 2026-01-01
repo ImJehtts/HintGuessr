@@ -10,13 +10,16 @@ export default async function handler(req, res) {
     }
 
     try {
+        const { recentAnswers } = req.body;
+
         const response = await openai.responses.create({
           model: "gpt-4.1-mini",
           input:         
         `
         Return ONLY valid JSON. Do not include any extra text, explanations, or formatting.
-        You are creating hints and answers for a guessing game inspired by "In a Nutshell" by Confident Games. Generate a list of 7-10 hint words and a single-word answer. The hints should relate to the answer word. The first hint must be a question word.
-        Capitalize the first letter of EVERY Hint. The answer should be a single word that is a noun, proper noun, or brand name (Lion, Rolex, Heart). The hints should tie together/form a sentence (last hint can't be 'and' for example)
+        You are creating hints and answers for a guessing game inspired by "In a Nutshell" by Confident Games. Generate a list of 7-10 hint words and a single-word answer. The hints should relate to the answer word but CAN NOT contain the answer word. The first hint must be a question word.
+        Capitalize the first letter of EVERY Hint. The answer should be a single word that is a noun, proper noun, or brand name (Rolex, Heart). The hints should tie together/form a sentence (last hint can't be 'and' for example). 
+        You can not return any of the following answers: ${recentAnswers.join(', ')}.
         Example:
         {
           "hints": ["What", "Company", "Has", "The", "Slogan", "Just", "Do", "It", "", ""],
